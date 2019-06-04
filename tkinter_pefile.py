@@ -1,17 +1,12 @@
 
 # coding: utf-8
 
-# In[1]:
-
 
 import pefile
 import tkinter as tk
 from tkinter import filedialog  # 檔案視窗
 from tkinter import ttk  # 比較美觀一點的介面套件
 import os #取目錄用
-
-
-# In[2]:
 
 
 # 掃描路徑選擇
@@ -36,36 +31,39 @@ mode = 1
 def option_selection():
     mode = var_option.get()
 
-# 按下開始後執行的功能 (到時候會向server取.py檔)  ######### 這裡還沒寫完 ############ 
+# 按下開始後執行的功能 (到時候會向server取.py檔)
 def parseFile():
-    pass
-#     global var_option, dir_arr
+    global var_option, dir_arr
     
-#     # 掃描模式 ------之後要根據不同掃描模式要做什麼修改程式
-#     mode = var_option.get()
+    # 掃描模式 ------之後要根據不同掃描模式要做什麼修改程式
+    mode = var_option.get()
     
-#     # 從選取的資料夾中讀取檔案 , file_arr存放檔案路徑 https://www.ewdna.com/2012/04/pythonoswalk.html
-#     file_arr = []
-#     for d in range(len(dir_arr)):
-#         if dir_arr[d] != '':  # 從該目錄下讀取子目錄及檔案
-#             for dirPath, dirNames, fileNames in os.walk(dir_arr[d]):
-#                 for f in fileNames:
-#                     file_arr.append(os.path.join(dirPath, f))
-#                     print(os.path.join(dirPath, f))
-#                     # 需要再判斷檔案是不是exe
-#         else:
-#             pass
+    # 從選取的資料夾中讀取檔案 , file_arr存放檔案路徑 https://www.ewdna.com/2012/04/pythonoswalk.html
+    file_arr = []
+    for d in range(len(dir_arr)):
+        if dir_arr[d] != '':  # 從該目錄下讀取子目錄及檔案
+            for dirPath, dirNames, fileNames in os.walk(dir_arr[d]):
+                for f in fileNames:
+                    # 需要再判斷檔案是不是exe
+                    ext = os.path.splitext(f)[-1]  #用.分隔
+                    if ext == '.exe':
+                        file_arr.append(os.path.join(dirPath, f))      
+        else:
+            pass
      
-#     # 對取出的檔案們做一些運算 (e.g., 用 pefile 套件取值)
+    # 對取出的檔案們做一些運算 (e.g., 用 pefile 套件取值)
 #     while(len(file_arr) != 0):
-#         for f in range(len(file_arr)):
-#             pe = pefile.PE(file_arr[f], fast_load=True)  # fast_load=True, prevent parsing the directories
-#             for section in pe.sections:
-#                 print (section.Name, hex(section.VirtualAddress), hex(section.Misc_VirtualSize), section.SizeOfRawData)
-#             file_arr.pop(file_arr[f])  # 做完就丟掉
+    for f in range(len(file_arr)):
+        pe = pefile.PE(file_arr[f], fast_load=True)  # fast_load=True, prevent parsing the directories
+        print(file_arr[f])
+        for section in pe.sections:
+            print (section.Name, hex(section.VirtualAddress), hex(section.Misc_VirtualSize), section.SizeOfRawData)
+        print('----------------------')
+        #file_arr.pop(file_arr[f])  # 做完就丟掉
     
-#     print(dir_arr)
-#     print(mode)
+    print(dir_arr)
+    print(file_arr)
+    print(mode)
 
 
 #     for section in pe.sections:
@@ -74,12 +72,11 @@ def parseFile():
 #         T.insert('insert', 'section name: '+str(section.Name)+', section virtual address: '+hex(section.VirtualAddress)+', section misc_virtualSize: '+hex(section.Misc_VirtualSize)+', section size of raw data: '+str(section.SizeOfRawData)+"\n")
 
 
-# In[3]:
-
 
 # 主視窗
 root = tk.Tk()
 root.title('Security Scan')  # 視窗標題
+root.resizable(False, False)
 
 # 創建 label 容器 ----- ttk.LabelFrame
 server_container = ttk.LabelFrame(root, text="Server")     # 創建容器，其父容器為 root
