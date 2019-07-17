@@ -25,7 +25,7 @@ SECRET_KEY = '-x=gy_$)5=4^&g@jd&q_af286c8h3q^ka+1)0mb96rx*=_$ho$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['140.119.19.21']
+ALLOWED_HOSTS = ['*']
 #test testttt
 
 # Application definition
@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'panel',
+    'rest_framework',
+    'frontend',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -48,7 +51,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
+    
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:8000',
+# )
+# CORS_ORIGIN_REGEX_WHITELIST = (
+#     'http://localhost:8000',
+# )
 
 ROOT_URLCONF = 'security_rabbit.urls'
 
