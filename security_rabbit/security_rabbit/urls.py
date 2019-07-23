@@ -22,10 +22,10 @@ register_converter(StringConverter, 'computerName')
 urlpatterns = [
     # path('upload/', )   從殼下載檔案
     # path('user/', userPage) , #使用者看的頁面
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     # path('computer/<str:computerName>/',showDetail),
     # path('computer/<str:computerName>/<int:sequence>/',showScanningDetail),
     # path('file/<str:computerName>/<str:fileName>/',showFileDetail),
     path('',include('panel.urls')),
-    path('', include('frontend.urls'))
+    
 ]

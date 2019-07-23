@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import computerList, scanningHistory, scanningDetails, fileInfo
-from .serializers import computerListSerializer
+from .serializers import computerListSerializer, scanningHistorySerializer
 from rest_framework import generics
 
 # Create your views here.
@@ -38,6 +38,10 @@ def showFileDetail(request,computerName,fileName):
 class computerListCreate(generics.ListCreateAPIView):
         queryset = computerList.objects.all()
         serializer_class = computerListSerializer
+
+class scanningHistoryListCreate(generics.ListCreateAPIView):
+        queryset = scanningHistory.objects.all()
+        serializer_class = scanningHistorySerializer
 
 # def example(request):
 #     lists = computer_list.objects.all()

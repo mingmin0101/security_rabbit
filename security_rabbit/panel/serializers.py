@@ -6,10 +6,15 @@ class computerListSerializer(serializers.ModelSerializer):
         model = computerList
         fields = '__all__'
 
+# class scanningHistorySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = scanningHistory
+#         fields = '__all__'
 class scanningHistorySerializer(serializers.ModelSerializer):
+    computerName = serializers.CharField(source='computer')
     class Meta:
         model = scanningHistory
-        fields = '__all__'
+        fields = ('id','scan_sequence','scanning_start_time','scanning_end_time','computerName')
 
 class scanningDetailsSerializer(serializers.ModelSerializer):
     class Meta:
