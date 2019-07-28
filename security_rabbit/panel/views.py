@@ -1,8 +1,12 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import computerList, scanningHistory, scanningDetails, fileInfo
+from django.conf import settings
+from django.core.files import File
+from .models import computerList, scanningHistory, scanningDetails, fileInfo, Documents
+from .forms import DocumentForm
 from .serializers import computerListSerializer, scanningHistorySerializer
 from rest_framework import generics
+import os
 
 # Create your views here.
 def userPage(request):
@@ -46,3 +50,22 @@ class scanningHistoryListCreate(generics.ListCreateAPIView):
 # def example(request):
 #     lists = computer_list.objects.all()
 #     return render(request,'user.html',locals()) 
+
+def uploadxml(request):
+    if (request.POST):
+        form = DocumentForm(request.POST,request.FILES)
+        if form.is_valid:
+            new_doc = Documents(file = request.FILES['docfile'])
+            new_doc.save()
+    else:
+        form = DocumentForm()
+    return render(request,'uploadxml.html',{'form':form})
+
+def downloadexe(request,filename):
+    file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.exe')
+    with open(file_path,'rb') as f:
+        file = File (f)
+        response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
+        response['Content-Disposition'] = 'attachment; filename=' + filename + '.exe'
+        response['Content-Length'] = os.path.getsize(file_path)
+    return response
