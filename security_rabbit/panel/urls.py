@@ -7,4 +7,6 @@ urlpatterns = [
     path('api/scanningHistory',views.scanningHistoryListCreate.as_view()),
     path('uploadxml/',views.uploadxml),
     path('downloadexe/<slug:filename>',views.downloadexe),
+    path('downloadpy/<slug:filename>',views.downloadpy),
+    path('downloadtxt/<slug:filename>',views.downloadtxt),
 ]

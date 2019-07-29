@@ -1,8 +1,5 @@
-
 # coding: utf-8
-
-# In[7]:
-
+# 2019-07-29 update
 
 import tkinter as tk
 from tkinter import filedialog  # 檔案視窗
@@ -11,9 +8,6 @@ import platform
 import os
 import subprocess
 import requests
-
-
-# In[10]:
 
 
 # pip install requests 
@@ -47,11 +41,24 @@ class RabbitClient:
             #print(r2.content)
     
     def clientDownloadfile(self):
-        self.downloadURL='http://127.0.0.1:8000/downloadexe/core_function'
+        self.downloadURL='http://127.0.0.1:8000/downloadpy/core_function'
         r = self.client.get(self.downloadURL)
-        exefile = open("rabbit_scanner.py",'wb+')
-        exefile.write(r.content)
-        exefile.close()
+        pyfile = open("rabbit_scanner.py",'wb+')
+        pyfile.write(r.content)
+        pyfile.close()
+
+        self.downloadURL='http://127.0.0.1:8000/downloadexe/sigcheck'
+        r2 = self.client.get(self.downloadURL)
+        pyfile = open("sigcheck.exe",'wb+')
+        pyfile.write(r2.content)
+        pyfile.close()
+
+        self.downloadURL='http://127.0.0.1:8000/downloadtxt/userdb_filter'
+        r3 = self.client.get(self.downloadURL)
+        pyfile = open("userdb_filter.txt",'wb+')
+        pyfile.write(r3.content)
+        pyfile.close()
+
         #print("clientDownloadfile")
         #print(r.status_code)
         
@@ -126,6 +133,8 @@ def parseFile():
         rab.clientUploadfile('printableString.txt')
         
     rab.clientUploadfile('scanresultxml.xml')
+    rab.clientUploadfile('pefile_scan_hostInfo.csv')
+    rab.clientUploadfile('pefile_scan_result.csv')
     
 def closeWindow():
     root.destroy()

@@ -61,11 +61,29 @@ def uploadxml(request):
         form = DocumentForm()
     return render(request,'uploadxml.html',{'form':form})
 
-def downloadexe(request,filename):
+def downloadpy(request,filename):
     file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.py')
     with open(file_path,'rb') as f:
         file = File (f)
         response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
-        response['Content-Disposition'] = 'attachment; filename=' + filename + '.exe'
+        response['Content-Disposition'] = 'attachment; filename=' + filename+'.py'
+        response['Content-Length'] = os.path.getsize(file_path)
+    return response
+
+def downloadexe(request,filename):
+    file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.exe')
+    with open(file_path,'rb') as f:
+        file = File (f)
+        response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
+        response['Content-Disposition'] = 'attachment; filename=' + filename+'.exe'
+        response['Content-Length'] = os.path.getsize(file_path)
+    return response
+
+def downloadtxt(request,filename):
+    file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.txt')
+    with open(file_path,'rb') as f:
+        file = File (f)
+        response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
+        response['Content-Disposition'] = 'attachment; filename=' + filename+'.txt'
         response['Content-Length'] = os.path.getsize(file_path)
     return response
