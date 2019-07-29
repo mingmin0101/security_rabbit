@@ -62,7 +62,7 @@ def uploadxml(request):
     return render(request,'uploadxml.html',{'form':form})
 
 def downloadexe(request,filename):
-    file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.exe')
+    file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.py')
     with open(file_path,'rb') as f:
         file = File (f)
         response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
