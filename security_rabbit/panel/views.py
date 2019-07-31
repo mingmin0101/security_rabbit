@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import computerList, scanningHistory, scanningDetails, fileInfo
+from .models import computerList, scanningHistory, scanningDetails, fileInfo, Documents
 from .serializers import computerListSerializer, scanningHistorySerializer,scanningDetailsSerializer,fileInfoSerializer
 from rest_framework import generics
 
