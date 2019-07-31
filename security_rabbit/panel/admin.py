@@ -44,8 +44,19 @@ class ScanAdmin(admin.ModelAdmin):
 
 admin.site.register(scanningHistory,ScanAdmin)  
 
-admin.site.register(scanningDetails)         
-admin.site.register(fileInfo) 
+class detailAdmin(admin.ModelAdmin):
+    list_display = ['fileName', 'scanning_history_id']
+    list_filter = ['fileName'] 
+    search_fields = ['fileName']
+
+admin.site.register(scanningDetails,detailAdmin)
+
+class fileAdmin(admin.ModelAdmin):
+    list_display = ['scanning_details_id', 'file_info_url']
+    list_filter = ['file_info_url'] 
+    search_fields = ['file_info_url']
+
+admin.site.register(fileInfo,fileAdmin) 
 
 
      

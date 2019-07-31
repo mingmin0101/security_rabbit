@@ -1,12 +1,8 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from django.conf import settings
-from django.core.files import File
-from .models import computerList, scanningHistory, scanningDetails, fileInfo, Documents
-from .forms import DocumentForm
-from .serializers import computerListSerializer, scanningHistorySerializer
+from .models import computerList, scanningHistory, scanningDetails, fileInfo
+from .serializers import computerListSerializer, scanningHistorySerializer,scanningDetailsSerializer,fileInfoSerializer
 from rest_framework import generics
-import os
 
 # Create your views here.
 def userPage(request):
@@ -47,43 +43,14 @@ class scanningHistoryListCreate(generics.ListCreateAPIView):
         queryset = scanningHistory.objects.all()
         serializer_class = scanningHistorySerializer
 
+
+class scanningDetailListCreate(generics.ListCreateAPIView):
+        queryset = scanningDetails.objects.all()
+        serializer_class = scanningDetailsSerializer
+
+class fileInfoListCreate(generics.ListCreateAPIView):
+        queryset = fileInfo.objects.all()
+        serializer_class = fileInfoSerializer
 # def example(request):
 #     lists = computer_list.objects.all()
 #     return render(request,'user.html',locals()) 
-
-def uploadxml(request):
-    if (request.POST):
-        form = DocumentForm(request.POST,request.FILES)
-        if form.is_valid:
-            new_doc = Documents(file = request.FILES['docfile'])
-            new_doc.save()
-    else:
-        form = DocumentForm()
-    return render(request,'uploadxml.html',{'form':form})
-
-def downloadpy(request,filename):
-    file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.py')
-    with open(file_path,'rb') as f:
-        file = File (f)
-        response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
-        response['Content-Disposition'] = 'attachment; filename=' + filename+'.py'
-        response['Content-Length'] = os.path.getsize(file_path)
-    return response
-
-def downloadexe(request,filename):
-    file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.exe')
-    with open(file_path,'rb') as f:
-        file = File (f)
-        response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
-        response['Content-Disposition'] = 'attachment; filename=' + filename+'.exe'
-        response['Content-Length'] = os.path.getsize(file_path)
-    return response
-
-def downloadtxt(request,filename):
-    file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.txt')
-    with open(file_path,'rb') as f:
-        file = File (f)
-        response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
-        response['Content-Disposition'] = 'attachment; filename=' + filename+'.txt'
-        response['Content-Length'] = os.path.getsize(file_path)
-    return response

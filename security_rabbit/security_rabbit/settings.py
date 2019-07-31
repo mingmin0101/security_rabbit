@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'corsheaders'
 ]
 
+# AUTH_USER_MODEL = 'panel.CustomUser'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -136,6 +138,3 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
     os.path.join(BASE_DIR,'static/css')
 ]
-
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-MEDIA_URL='/media/'

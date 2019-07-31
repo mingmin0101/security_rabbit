@@ -1,4 +1,5 @@
 from django.db import models
+# from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class computerList(models.Model):
@@ -35,8 +36,8 @@ class fileInfo(models.Model):
     scanning_details_id = models.ForeignKey(scanningDetails, on_delete=models.CASCADE)
     file_info_url = models.URLField() # A CharField for a URL, validated by URLValidator. The default form widget for this field is a TextInput. Like all CharField subclasses, URLField takes the optional max_length argument. If you don’t specify max_length, a default of 200 is used.
         
-class Documents(models.Model):
-    file = models.FileField(upload_to='documents')
+# class CustomUser(AbstractUser):
+#     name = models.CharField(blank=True, max_length=255)
 
-class RSAKeys(models.Model):
-    key = models.TextField()
+#     def __str__(self):
+#         return self.email

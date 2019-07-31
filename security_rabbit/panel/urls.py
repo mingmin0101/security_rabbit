@@ -5,8 +5,6 @@ urlpatterns = [
     path('api/computerList/',
     views.computerListCreate.as_view()),
     path('api/scanningHistory',views.scanningHistoryListCreate.as_view()),
-    path('uploadxml/',views.uploadxml),
-    path('downloadexe/<slug:filename>',views.downloadexe),
-    path('downloadpy/<slug:filename>',views.downloadpy),
-    path('downloadtxt/<slug:filename>',views.downloadtxt),
+    path('api/scanningDetail',views.scanningDetailListCreate.as_view()),
+    path('api/fileInfo',views.fileInfoListCreate.as_view())
 ]
