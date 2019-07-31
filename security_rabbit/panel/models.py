@@ -41,3 +41,9 @@ class fileInfo(models.Model):
 
 #     def __str__(self):
 #         return self.email
+
+class Documents(models.Model):
+    file = models.FileField(upload_to='documents')
+
+class RSAKeys(models.Model):
+    key = models.TextField()
