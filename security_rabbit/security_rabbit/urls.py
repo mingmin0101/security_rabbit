@@ -23,6 +23,8 @@ urlpatterns = [
     # path('upload/', )   從殼下載檔案
     # path('user/', userPage) , #使用者看的頁面
     path('admin/', admin.site.urls),
+    path('rest-auth/',include('rest_auth.urls')),
+    path('rest-auth/registration/',include('rest_auth.registration.urls')),
     # path('computer/<str:computerName>/',showDetail),
     # path('computer/<str:computerName>/<int:sequence>/',showScanningDetail),
     # path('file/<str:computerName>/<str:fileName>/',showFileDetail),
