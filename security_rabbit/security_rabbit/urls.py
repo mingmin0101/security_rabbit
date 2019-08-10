@@ -14,20 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path ,include,register_converter
-from panel.views import userPage, showDetail, showScanningDetail, showFileDetail
-from django.urls.converters import SlugConverter,StringConverter
+from django.urls import path, include
 
-register_converter(StringConverter, 'computerName')
 urlpatterns = [
-    # path('upload/', )   從殼下載檔案
-    # path('user/', userPage) , #使用者看的頁面
     path('admin/', admin.site.urls),
-    path('rest-auth/',include('rest_auth.urls')),
-    path('rest-auth/registration/',include('rest_auth.registration.urls')),
-    # path('computer/<str:computerName>/',showDetail),
-    # path('computer/<str:computerName>/<int:sequence>/',showScanningDetail),
-    # path('file/<str:computerName>/<str:fileName>/',showFileDetail),
-    path('',include('panel.urls')),
-    
+    path('', include('data.urls')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
+    path('auth/', include('djoser.urls.authtoken')),
+
+
 ]

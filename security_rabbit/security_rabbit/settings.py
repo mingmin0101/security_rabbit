@@ -20,13 +20,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-x=gy_$)5=4^&g@jd&q_af286c8h3q^ka+1)0mb96rx*=_$ho$'
+SECRET_KEY = 'vv%z7ly*^f)9%fu*k+^dc5#qyk8z&#j-(o3z6ygnc9$r%#pq$2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-#test testttt
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # Application definition
 
@@ -37,20 +39,41 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'panel',
+    'users',    # override django built-in User
+    'data',     # process data
     'rest_framework',
+    'rest_framework.authtoken',   # login, logout
+    'djoser',   # https://djoser.readthedocs.io/en/latest/getting_started.html
+    'drf_multiple_model',    #https://django-rest-multiple-models.readthedocs.io/en/latest/index.html
+
+    'django.contrib.sites',  # 不知道是誰要用的
     'corsheaders',
-    'rest_framework.authtoken',
-    'rest_auth',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
-    'data',
 ]
 
-SITE_ID = 1
-# AUTH_USER_MODEL = 'panel.CustomUser'
+SITE_ID = 1 # 不知道是誰要用的
+CORS_ORIGIN_ALLOW_ALL = True # 不知道是誰要用的
+CORS_ALLOW_CREDENTIALS = True # 不知道是誰要用的
+
+AUTH_USER_MODEL = 'users.User'
+
+# https://djoser.readthedocs.io/en/latest/authentication_backends.html
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    "JWT_ALLOW_REFRESH": True,
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+
+}
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,18 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
-    
 ]
-
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_WHITELIST = (
-#     'http://localhost:8000',
-# )
-# CORS_ORIGIN_REGEX_WHITELIST = (
-#     'http://localhost:8000',
-# )
 
 ROOT_URLCONF = 'security_rabbit.urls'
 

@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 class Computer(models.Model):
     """
@@ -18,6 +19,7 @@ class Computer(models.Model):
 
     latest_scan_score    ==>  user網頁直接撈最新的ScanningRecord分數
     """
+    administrator = models.ForeignKey(User, on_delete=models.CASCADE)
     deviceUuid = models.CharField(max_length=50)
     deviceName = models.CharField(max_length=20)   
     userName = models.CharField(max_length=15)
@@ -29,9 +31,18 @@ class Computer(models.Model):
     processor = models.CharField(max_length=80)   
     cpu = models.CharField(max_length=10)   
     memoryCapacity = models.CharField(max_length=10)
-    4
+    
     registry_StartupCommand = models.TextField(blank=True)
-    # latest_scan_score = 
+    latest_scan_score = models.IntegerField(default=0)
+
+    def score(self):
+        '''Returns the computer's score .'''
+        if self.latest_scan_score > 7:
+            return "Dangerous"
+        elif self.latest_scan_score > 4:
+            return "Warning"
+        else:
+            return "Safe"
     
     def __str__(self):
         return self.deviceName
@@ -57,11 +68,6 @@ class ScanningRecord(models.Model):
 class FileInfo(models.Model):
     """every scanning_details contains scanned files info"""
     
-    # members = models.ManyToManyField(
-    #     ScanningRecord,
-    #     through='scanningRecord_fileInfo',
-    # )
-
     file_path = models.TextField()
     file_hash = models.CharField(max_length=100)
     peutils_packed = models.CharField(max_length=200, blank=True)
@@ -83,9 +89,8 @@ class FileInfo(models.Model):
     def __str__(self):
         return str(self.file_path)
 
-# class ScanningRecord_fileInfo(models.Model):
-#     """showing the details of each scanning record"""
-    
-#     scanningRecord_id = models.ForeignKey(ScanningRecord, on_delete=models.CASCADE)
-#     fileInfo_id = models.ForeignKey(FileInfo, on_delete=models.CASCADE)
-    
+class Documents(models.Model):
+    file = models.FileField(upload_to='documents')
+
+class RSAKeys(models.Model):
+    key = models.TextField()
