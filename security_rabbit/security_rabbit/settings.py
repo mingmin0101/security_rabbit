@@ -41,10 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',    # override django built-in User
     'data',     # process data
+    'djoser',   # https://djoser.readthedocs.io/en/latest/getting_started.html
+
     'rest_framework',
     'rest_framework.authtoken',   # login, logout
-    'djoser',   # https://djoser.readthedocs.io/en/latest/getting_started.html
-    'drf_multiple_model',    #https://django-rest-multiple-models.readthedocs.io/en/latest/index.html
+    #'rest_auth',
+    #'drf_multiple_model',    #https://django-rest-multiple-models.readthedocs.io/en/latest/index.html
 
     'django.contrib.sites',  # 不知道是誰要用的
     'corsheaders',
@@ -60,20 +62,19 @@ AUTH_USER_MODEL = 'users.User'
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
 
-JWT_AUTH = {
-    "JWT_ALLOW_REFRESH": True,
-    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+# JWT_AUTH = {
+#     "JWT_ALLOW_REFRESH": True,
+#     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 
-}
+# }
 
-SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
-}
+# SIMPLE_JWT = {
+#    'AUTH_HEADER_TYPES': ('JWT',),
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
