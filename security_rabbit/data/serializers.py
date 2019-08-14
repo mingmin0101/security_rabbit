@@ -7,7 +7,8 @@ class ComputerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Computer
-        fields = ['id', 'deviceUuid', 'deviceName', 'userName', 'ipAddr', 'macAddr', 'os', 'processor', 'cpu', 'memoryCapacity', 'last_scan_status']
+        fields = '__all__'
+        #fields = ['id', 'deviceUuid', 'deviceName', 'userName', 'ipAddr', 'macAddr', 'os', 'processor', 'cpu', 'memoryCapacity', 'last_scan_status']
 
 
 class ScanningRecordSerializer(serializers.ModelSerializer):
