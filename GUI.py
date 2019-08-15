@@ -114,8 +114,23 @@ def parseFile():
     start_button.config(state='disabled')
     
     # 掃描選項
-    option_dict = {'pefile_option':var_general1.get(),'peutils_option':var_general3.get(),'rw_option':var_general7.get(),'internet_option':var_general8.get(),'exec_option':var_general6.get(),'sigcheck_option':var_general2.get(),'byte_option':var_advance2.get(),'printableString_option':var_advance4.get(),'entropy_option':var_advance3.get(),'scanHeader_option':var_advance1.get(),'hostInfo_option':var_general5.get(),'registry_option':var_general10.get(),'fileTime_option':var_general4.get(),'fileVisibility_option':var_general9.get()}
-    option_arr = [var_general1.get(),var_general3.get(),var_general7.get(),var_general8.get(),var_general6.get(),var_general2.get(),]
+    option_dict = {
+        'pefile_option':general_options['自動解析檔案內部結構(pefile)'].get(),
+        'peutils_option':general_options['加殼(peutils)'].get(),
+        'rw_option':general_options['辨識檔案存取(讀、寫)能力'].get(),
+        'internet_option':general_options['辨識檔案連網能力'].get(),
+        'exec_option':general_options['是否可以執行其他可執行檔(WinExec)'].get(),
+        'sigcheck_option':general_options['數位簽章(sigcheck)'].get(),
+        'byte_option':var_advance_options[1].get(),
+        'printableString_option':var_advance_options[3].get(),
+        'entropy_option':var_advance_options[2].get(),
+        'scanHeader_option':var_advance_options[0].get(),
+        'hostInfo_option':general_options['硬體、軟體及作業系統資訊'].get(),
+        'registry_option':general_options['是否註冊windows系統機碼'].get(),
+        'fileTime_option':general_options['蒐集可執行檔之時間資訊'].get(),
+        'fileVisibility_option':general_options['是否為隱藏檔案'].get()}
+
+    option_arr = [ general_options[option_text] for option_text in general_options]
 
     # 暫時執行另一個file
     p = subprocess.Popen(['python','rabbit_scanner.py',str(option_dict), str(dir_arr)],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -195,33 +210,13 @@ browse_file_button.place(x = 210, y = 85, width=20, height=20)
 def option_selection():
     mode = var_option.get()
     if (mode == 1):  # 一般掃描
-        var_general1.set(value=1)
-        var_general2.set(value=1)
-        var_general3.set(value=1)
-        var_general4.set(value=1)
-        var_general5.set(value=1)
-        var_general6.set(value=1)
-        var_general7.set(value=1)
-        var_general8.set(value=1)
-        var_general9.set(value=1)
-        var_general10.set(value=1)
-        
-        var_advance1.set(value=0)
-        var_advance2.set(value=0)
-        var_advance3.set(value=0)
-        var_advance4.set(value=0)
-        var_advance5.set(value=0)
-        
-        general1.config(state='disabled')
-        general2.config(state='disabled')
-        general3.config(state='disabled')
-        general4.config(state='disabled')
-        general5.config(state='disabled')
-        general6.config(state='disabled')
-        general7.config(state='disabled')
-        general8.config(state='disabled')
-        general9.config(state='disabled')
-        general10.config(state='disabled')
+        for option_text in general_options:
+            general_options[option_text].set(value=1)
+
+        for i in range(6):
+            var_advance_options[i].set(value=0)
+        for i in range(10):
+            general_button[i].config(state='disabled')
         
         advance1.config(state='disabled')
         advance2.config(state='disabled')
@@ -230,33 +225,13 @@ def option_selection():
         advance5.config(state='disabled')
             
     elif (mode == 2):  # 深度掃描
-        var_general1.set(value=1)
-        var_general2.set(value=1)
-        var_general3.set(value=1)
-        var_general4.set(value=1)
-        var_general5.set(value=1)
-        var_general6.set(value=1)
-        var_general7.set(value=1)
-        var_general8.set(value=1)
-        var_general9.set(value=1)
-        var_general10.set(value=1)
-        
-        var_advance1.set(value=1)
-        var_advance2.set(value=1)
-        var_advance3.set(value=1)
-        var_advance4.set(value=1)
-        var_advance5.set(value=1)
-        
-        general1.config(state='disabled')
-        general2.config(state='disabled')
-        general3.config(state='disabled')
-        general4.config(state='disabled')
-        general5.config(state='disabled')
-        general6.config(state='disabled')
-        general7.config(state='disabled')
-        general8.config(state='disabled')
-        general9.config(state='disabled')
-        general10.config(state='disabled')
+        for option_text in general_options:
+            general_options[option_text].set(value=1)
+        for i in range(6):
+            var_advance_options[i].set(value=1)
+        for i in range(10):
+            general_button[i].config(state='disabled')
+
         
         advance1.config(state='disabled')
         advance2.config(state='disabled')
@@ -265,16 +240,8 @@ def option_selection():
         advance5.config(state='disabled')
          
     elif (mode == 3):   # 自訂
-        general1.config(state='normal')
-        general2.config(state='normal')
-        general3.config(state='normal')
-        general4.config(state='normal')
-        general5.config(state='normal')
-        general6.config(state='normal')
-        general7.config(state='normal')
-        general8.config(state='normal')
-        general9.config(state='normal')
-        general10.config(state='normal')
+        for i in range(10):
+            general_button[i].config(state='normal')
         
         advance1.config(state='normal')
         advance2.config(state='normal')
@@ -292,51 +259,34 @@ o2.grid(column=1, row=9, sticky=tk.W)
 o3.grid(column=2, row=9, sticky=tk.W)
 
 # option細項
-var_general1 = tk.IntVar(value=1)
-var_general2 = tk.IntVar(value=1)
-var_general3 = tk.IntVar(value=1)
-var_general4 = tk.IntVar(value=1)
-var_general5 = tk.IntVar(value=1)
-var_general6 = tk.IntVar(value=1)
-var_general7 = tk.IntVar(value=1)
-var_general8 = tk.IntVar(value=1)
-var_general9 = tk.IntVar(value=1)
-var_general10 = tk.IntVar(value=1)
-var_advance1 = tk.IntVar()
-var_advance2 = tk.IntVar()
-var_advance3 = tk.IntVar()
-var_advance4 = tk.IntVar()
-var_advance5 = tk.IntVar()
+general_options = {'自動解析檔案內部結構(pefile)': tk.IntVar(value=1),
+                    '數位簽章(sigcheck)': tk.IntVar(value=1),
+                    '加殼(peutils)': tk.IntVar(value=1),
+                    '蒐集可執行檔之時間資訊': tk.IntVar(value=1),
+                    '硬體、軟體及作業系統資訊': tk.IntVar(value=1),
+                    '是否可以執行其他可執行檔(WinExec)': tk.IntVar(value=1),
+                    '辨識檔案存取(讀、寫)能力': tk.IntVar(value=1),
+                    '辨識檔案連網能力': tk.IntVar(value=1),
+                    '是否為隱藏檔案': tk.IntVar(value=1),
+                    '是否註冊windows系統機碼':tk.IntVar(value=1)
+                }
+var_advance_options = []
+general_button = []
 
-general1 = ttk.Checkbutton(options_container, text='自動解析檔案內部結構(pefile)', variable=var_general1, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-general2 = ttk.Checkbutton(options_container, text='數位簽章(sigcheck)', variable=var_general2, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-general3 = ttk.Checkbutton(options_container, text='加殼(peutils)', variable=var_general3, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-general4 = ttk.Checkbutton(options_container, text='蒐集可執行檔之時間資訊', variable=var_general4, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-general5 = ttk.Checkbutton(options_container, text='硬體、軟體及作業系統資訊', variable=var_general5, onvalue=1, offvalue=0, command=option_selection, state='disabled')
+for i in range(6):
+    var_advance_options.append(tk.IntVar())
 
-general1.grid(column=0, row=10, sticky=tk.W)
-general2.grid(column=0, row=11, sticky=tk.W)
-general3.grid(column=0, row=12, sticky=tk.W)
-general4.grid(column=0, row=13, sticky=tk.W)
-general5.grid(column=0, row=14, sticky=tk.W)
+#arrangement problem will come back later
+for index,option_text in enumerate(general_options):
+    general_button.append(ttk.Checkbutton(options_container, text=option_text, variable= general_options[option_text], onvalue=1, offvalue=0, command=option_selection, state='disabled'))
+    general_button[index].grid(column=0, row = index + 10, sticky=tk.W)
 
-general6 = ttk.Checkbutton(options_container, text='是否可以執行其他可執行檔(WinExec)', variable=var_general6, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-general7 = ttk.Checkbutton(options_container, text='辨識檔案存取(讀、寫)能力', variable=var_general7, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-general8 = ttk.Checkbutton(options_container, text='辨識檔案連網能力', variable=var_general8, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-general9 = ttk.Checkbutton(options_container, text='是否為隱藏檔案', variable=var_general9, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-general10 = ttk.Checkbutton(options_container, text='是否註冊windows系統機碼', variable=var_general10, onvalue=1, offvalue=0, command=option_selection, state='disabled')
 
-general6.grid(column=1, row=10, sticky=tk.W)
-general7.grid(column=1, row=11, sticky=tk.W)
-general8.grid(column=1, row=12, sticky=tk.W)
-general9.grid(column=1, row=13, sticky=tk.W)
-general10.grid(column=1, row=14, sticky=tk.W)
-
-advance1 = ttk.Checkbutton(options_container, text='掃描檔案標頭，辨識檔案為windows PE執行檔', variable=var_advance1, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-advance2 = ttk.Checkbutton(options_container, text='掃描每種byte個數', variable=var_advance2, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-advance3 = ttk.Checkbutton(options_container, text='計算entropy，辨識是否被壓縮加密', variable=var_advance3, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-advance4 = ttk.Checkbutton(options_container, text='掃描可列印字元', variable=var_advance4, onvalue=1, offvalue=0, command=option_selection, state='disabled')
-advance5 = ttk.Checkbutton(options_container, text='納入SYS、DLL', variable=var_advance5, onvalue=1, offvalue=0, command=option_selection, state='disabled')
+advance1 = ttk.Checkbutton(options_container, text='掃描檔案標頭，辨識檔案為windows PE執行檔', variable=var_advance_options[0], onvalue=1, offvalue=0, command=option_selection, state='disabled')
+advance2 = ttk.Checkbutton(options_container, text='掃描每種byte個數', variable=var_advance_options[1], onvalue=1, offvalue=0, command=option_selection, state='disabled')
+advance3 = ttk.Checkbutton(options_container, text='計算entropy，辨識是否被壓縮加密', variable=var_advance_options[2], onvalue=1, offvalue=0, command=option_selection, state='disabled')
+advance4 = ttk.Checkbutton(options_container, text='掃描可列印字元', variable=var_advance_options[3], onvalue=1, offvalue=0, command=option_selection, state='disabled')
+advance5 = ttk.Checkbutton(options_container, text='納入SYS、DLL', variable=var_advance_options[4], onvalue=1, offvalue=0, command=option_selection, state='disabled')
 
 advance1.grid(column=2, row=10, sticky=tk.W)
 advance2.grid(column=2, row=11, sticky=tk.W)
