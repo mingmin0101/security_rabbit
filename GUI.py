@@ -128,7 +128,8 @@ def parseFile():
         'hostInfo_option':general_options['硬體、軟體及作業系統資訊'].get(),
         'registry_option':general_options['是否註冊windows系統機碼'].get(),
         'fileTime_option':general_options['蒐集可執行檔之時間資訊'].get(),
-        'fileVisibility_option':general_options['是否為隱藏檔案'].get()}
+        'fileVisibility_option':general_options['是否為隱藏檔案'].get()
+        }
 
     option_arr = [ general_options[option_text] for option_text in general_options]
 
@@ -218,7 +219,7 @@ def option_selection():
 
         for button in general_buttons:
             button.config(state='disabled')
-
+            
         for button in advance_buttons:
             button.config(state='disabled')
             
