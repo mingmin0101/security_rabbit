@@ -1,20 +1,25 @@
 from data.models import Computer, ScanningRecord, FileInfo
+from users.models import User
 from data.serializers import ComputerSerializer, ScanningRecordSerializer,FileInfoSerializer, FileNameSerializer
+from users.serializers import UserSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
 # API endpoint that allows users to be viewed or edited.
-@api_view(['POST'])
+@api_view(['GET'])
 def ComputerView(request):
     """
     Show the computer controlled by the current user.
     https://www.django-rest-framework.org/api-guide/filtering/
     """
     try:
-        computer = Computer.objects.filter(administrator = request.user)
-        serializer = ComputerSerializer(computer, many=True)
-        return Response(serializer.data)
+        querylist = (
+            UserSerializer(User.objects.filter(id = request.user.id), many=True).data,
+            ComputerSerializer(Computer.objects.filter(administrator = request.user), many=True).data,
+        )
+
+        return Response(querylist)
 
     except Computer.DoesNotExist:
         return Response(status = status.HTTP_404_NOT_FOUND)
