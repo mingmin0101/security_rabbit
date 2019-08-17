@@ -6,6 +6,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
+from data.tasks import calculate_score
+def process_uploaded_file(request):
+    pass
+
+
+
 # API endpoint that allows users to be viewed or edited.
 @api_view(['GET'])
 def ComputerView(request):
@@ -24,7 +30,6 @@ def ComputerView(request):
     except Computer.DoesNotExist:
         return Response(status = status.HTTP_404_NOT_FOUND)
 
-
 @api_view(['GET'])
 def ScanningRecordView(request):
     """
@@ -42,7 +47,6 @@ def ScanningRecordView(request):
 
     except Computer.DoesNotExist:
         return Response(status = status.HTTP_404_NOT_FOUND)
-
 
 @api_view(['GET'])
 def ScanningDetailsView(request):

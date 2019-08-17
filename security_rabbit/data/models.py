@@ -91,6 +91,13 @@ class FileInfo(models.Model):
 
 class Documents(models.Model):
     file = models.FileField(upload_to='documents')
+    uploaded_time = models.DateTimeField(auto_now=True)
+
+    # def __str__(self):
+    #     return str(self.file)
+
+    class Meta:
+        verbose_name_plural = "Documents"
 
 class RSAKeys(models.Model):
     key = models.TextField()

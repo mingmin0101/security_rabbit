@@ -1,5 +1,5 @@
 from django.contrib import admin
-from data.models import Computer, ScanningRecord, FileInfo #, ScanningRecord_fileInfo
+from data.models import Computer, ScanningRecord, FileInfo, Documents
 
 admin.site.site_header = "Security Rabbit Admin"
 admin.site.site_title = "Security Rabbit"
@@ -21,6 +21,12 @@ class FileAdmin(admin.ModelAdmin):
     list_filter = ['scanningRecord_id'] 
     # search_fields = ['file_info_url']
 
+class DocumentAdmin(admin.ModelAdmin):
+    list_display = ['file', 'uploaded_time']
+    
+        
+
 admin.site.register(Computer, ComputerAdmin) 
 admin.site.register(ScanningRecord, ScanAdmin)  
 admin.site.register(FileInfo, FileAdmin)
+admin.site.register(Documents, DocumentAdmin)

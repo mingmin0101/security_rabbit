@@ -42,19 +42,19 @@ INSTALLED_APPS = [
     'users',    # override django built-in User
     'data',     # process data
     'djoser',   # https://djoser.readthedocs.io/en/latest/getting_started.html
-
     'rest_framework',
     'rest_framework.authtoken',   # login, logout
-    #'rest_auth',
-    #'drf_multiple_model',    #https://django-rest-multiple-models.readthedocs.io/en/latest/index.html
+    'corsheaders',  # Cross Origin Resource Sharing (for frontend)
 
-    'django.contrib.sites',  # 不知道是誰要用的
-    'corsheaders',
+    #'rest_auth',
+    #'django.contrib.sites',  # 不知道是誰要用的
+    
 ]
 
-SITE_ID = 1 # 不知道是誰要用的
-CORS_ORIGIN_ALLOW_ALL = True # 不知道是誰要用的
-CORS_ALLOW_CREDENTIALS = True # 不知道是誰要用的
+#SITE_ID = 1 # 不知道是誰要用的
+
+CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ALLOW_CREDENTIALS = True 
 
 AUTH_USER_MODEL = 'users.User'
 
@@ -66,15 +66,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-# JWT_AUTH = {
-#     "JWT_ALLOW_REFRESH": True,
-#     'JWT_AUTH_HEADER_PREFIX': 'JWT',
-
-# }
-
-# SIMPLE_JWT = {
-#    'AUTH_HEADER_TYPES': ('JWT',),
-# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'security_rabbit.urls'
