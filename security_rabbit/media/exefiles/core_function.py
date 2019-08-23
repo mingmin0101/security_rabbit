@@ -22,9 +22,9 @@ import math
 
 # def host_info()
 import wmi
-import getpass
-import socket
-from winreg import * 
+import platform
+import subprocess
+import os
 
 # pandas
 import pandas as pd
@@ -41,118 +41,29 @@ def host_info(hostInfo_option, registry_option):
     2. 判斷檔案是否註冊於windows系統機碼，開機可自動啟動(wmi) 
     """
     w = wmi.WMI()
-    result_dict = {}
+    
     if(hostInfo_option == 1):
-        # username
-        username = getpass.getuser()
-        result_dict['username']=username
-
-        # computer name
-        hostname = socket.gethostname()
-        result_dict['hostname']=hostname
-
-        # MAC address
-        mac_addr = []
-        for interface in w.Win32_NetworkAdapterConfiguration (IPEnabled=1):
-            mac_addr.append((interface.Description, interface.MACAddress))
-        result_dict['mac_addr']=str(mac_addr)
-
-        # processer name  ############################
-    #     for process in w.Win32_Process():
-    #         print("%5s  %s" % (process.ProcessId, process.Name))
-
-        # memory capacity
+        x = subprocess.check_output('wmic csproduct get UUID')
+        deviceUuid = x.decode("utf-8").split('  \r\r\n')[1]
+        
+        t = tuple(platform.uname())
+        deviceName = t[1]
+        OS = t[0]+'-'+t[2]+'-'+t[3]
+        processor = t[5]
+        cpu = t[4]
+        
+        userName = os.getlogin()
+        
         totalSize = 0
         for memModule in w.Win32_PhysicalMemory():
             totalSize += int(memModule.Capacity)
-        # print('Memory capacity: %.2fMB' % (totalSize/1048576))
-        result_dict['memory_capacity(MB)'] = totalSize/1048576
-
-        # os ##################################
-    #     for os in w.Win32_OperatingSystem():
-    #         print(os.Caption)
-
-        # ip
-        ip = []
-        for interface in w.Win32_NetworkAdapterConfiguration (IPEnabled=1):
-            for ip_address in interface.IPAddress:
-                ip.append(ip_address)
-                # print(ip_address)
-        result_dict['ip_addr']=str(ip)
-
-        # cpu load percentage  #################################
-    #     for cpu in w.Win32_Processor(): 
-    #         timestamp = time.strftime('%a, %d %b %Y %H:%M:%S', time.localtime()) 
-    #         print('%s | Utilization: %s: %d %%' % (timestamp, cpu.DeviceID, cpu.LoadPercentage)) 
-
-        # sys-caption
-
-        # sys-os architecture
-
-        # num of processes   #################################
-    #     num=0
-    #     for process in w.Win32_Process():
-    #         num+=1
-    #     print("number of processes: "+str(num))
-    
-    
-    # registry
+        
+        memoryCapacity = totalSize/1048576
+        
     if(registry_option == 1):
-        Registry1 = ConnectRegistry(None, HKEY_LOCAL_MACHINE)
-        Registry2 = ConnectRegistry(None, HKEY_CURRENT_USER)
+        for s in w.Win32_StartupCommand(): 
+            print((s.Location, s.Caption, s.Command))
 
-        RawKey1 = OpenKey(Registry1, "SOFTWARE\Microsoft\Windows\CurrentVersion\Run")
-        RawKey2 = OpenKey(Registry1, "SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce")
-        RawKey3 = OpenKey(Registry2, "SOFTWARE\Microsoft\Windows\CurrentVersion\Run")
-        RawKey4 = OpenKey(Registry2, "SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce")
-        l1 = []
-        l2 = []
-        l3 = []
-        l4 = []
-        try:
-            i = 0
-            while 1:
-                name1, value1, type = EnumValue(RawKey1, i)
-                l1.append((name1, value1))
-                i+=1
-        except WindowsError:
-            pass
-            
-        try:
-            j = 0
-            while 1:
-                name2, value2, type = EnumValue(RawKey2, j)
-                l2.append((name2, value2))
-                j+=1
-        except WindowsError:
-            pass
-        
-        try:
-            k = 0
-            while 1:
-                name3, value3, type = EnumValue(RawKey3, k)
-                l3.append((name3, value3))
-                k+=1
-        except WindowsError:
-            pass
-        
-        try:
-            m = 0
-            while 1:
-                name4, value4, type = EnumValue(RawKey4,m)
-                l4.append((name4, value4))
-                m+=1
-        except WindowsError:
-            pass
-    
-    result_dict['HKEY_LOCAL_MACHINE(SOFTWARE\Microsoft\Windows\CurrentVersion\Run)']=str(l1)
-    result_dict['HKEY_LOCAL_MACHINE(SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce)']=str(l2)
-    result_dict['HKEY_CURRENT_USER(SOFTWARE\Microsoft\Windows\CurrentVersion\Run)']=str(l3)
-    result_dict['HKEY_CURRENT_USER(SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce)']=str(l4)
-    
-    df = pd.DataFrame(result_dict, index=[0])
-    
-    return df
     
 
 
