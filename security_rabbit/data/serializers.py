@@ -4,6 +4,9 @@ from data.models import Computer, ScanningRecord, FileInfo
 # The ModelSerializer class provides a shortcut that lets you automatically create a Serializer class with fields that correspond to the Model fields.
 class ComputerSerializer(serializers.ModelSerializer):
     last_scan_status = serializers.CharField(source='score')
+    mac = serializers.ListField(child=serializers.CharField())
+    ip = serializers.ListField(child=serializers.CharField())
+    registry = serializers.ListField(child=serializers.CharField())
 
     class Meta:
         model = Computer

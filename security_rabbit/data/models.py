@@ -44,6 +44,19 @@ class Computer(models.Model):
         else:
             return "Safe"
     
+    def mac(self):
+        mac_li = eval(self.macAddr)
+        # mac_list = []
+        # for item in mac_li:
+        #     mac_list.append(eval(item))
+        return mac_li
+
+    def ip(self):
+        return eval(self.ipAddr)
+
+    def registry(self):
+        return eval(self.registry_StartupCommand)
+    
     def __str__(self):
         return self.deviceName
 
