@@ -1,5 +1,0 @@
-,filepath,pefile_txt_offset_start,pefile_txt_offset_end,peutils,rw,internet,exec_other_exe,signer,create_time,last_modified_time,access_time,file_state(isHidden)
-0,C:/Users/mingm/Desktop/pefile_practice/pe\MicrosoftEdge.exe,1,267,None,False,False,False,"['Microsoft Corporation', 'Microsoft Windows Production PCA 2011', 'Microsoft Root Certificate Authority 2010']",Wed Jun 19 14:46:42 2019,Thu Mar 14 16:28:23 2019,Sat Aug 17 15:59:41 2019,32
-1,C:/Users/mingm/Desktop/pefile_practice/pe\notepad.exe,268,514,None,True,False,False,error,Wed Jun 19 14:46:42 2019,Sat Sep 22 17:07:18 2018,Sat Aug 17 15:59:42 2019,32
-2,C:/Users/mingm/Desktop/pefile_practice/pe\php.exe,515,742,[['Microsoft Visual C++ 8']],False,False,False,None,Wed Jun 19 14:46:44 2019,Thu Nov  8 14:40:24 2018,Sat Aug 17 15:59:43 2019,32
-3,C:/Users/mingm/Desktop/pefile_practice/pe\vs_community__592944301.1542033061.exe,743,1030,[['Microsoft Visual C++ 8']],True,False,False,"['Microsoft Corporation', 'Microsoft Code Signing PCA', 'Microsoft Root Certificate Authority']",Mon Jul 22 08:54:06 2019,Wed May 15 13:13:35 2019,Sat Aug 17 15:59:44 2019,32
