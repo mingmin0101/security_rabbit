@@ -23,7 +23,7 @@ class ScanningRecordSerializer(serializers.ModelSerializer):
 class FileNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = FileInfo
-        fields = ['file_path']
+        fields = ['id', 'file_path', 'score']
 
 
 # 需要加上讀取txt的字串
