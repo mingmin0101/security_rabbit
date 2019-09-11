@@ -46,9 +46,6 @@ class Computer(models.Model):
     
     def mac(self):
         mac_li = eval(self.macAddr)
-        # mac_list = []
-        # for item in mac_li:
-        #     mac_list.append(eval(item))
         return mac_li
 
     def ip(self):
