@@ -17,7 +17,8 @@ class ScanAdmin(admin.ModelAdmin):
     ordering = ['scan_id']
 
 class FileAdmin(admin.ModelAdmin):
-    list_display = ['scanningRecord_id', 'file_path', 'file_hash', 'peutils_packed', 'signer', 'create_time', 'modified_time', 'accessed_time', 'file_state', 'pefile_txt', 'printablestr_txt', 'entropy', 'byte_distribution', 'score']
+    list_display = [field.name for field in FileInfo._meta.get_fields()]
+    # list_display = ['scanningRecord_id', 'file_path', 'file_hash', 'peutils_packed', 'signer', 'create_time', 'modified_time', 'accessed_time', 'file_state', 'pefile_txt', 'printablestr_txt', 'entropy', 'byte_distribution', 'score']
     list_filter = ['scanningRecord_id'] 
     # search_fields = ['file_info_url']
 
