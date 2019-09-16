@@ -163,6 +163,10 @@ class FileInfo(models.Model):
     def exports(self):
         return eval(self.pe_exports)
 
+    def packed(self):
+        s = self.peutils_packed.replace("['", '"').replace("']", '"')
+        return eval(s)
+
 class Documents(models.Model):
     file = models.FileField(upload_to='documents')
     uploaded_time = models.DateTimeField(auto_now=True)

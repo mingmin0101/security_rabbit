@@ -36,6 +36,7 @@ class FileInfoSerializer(serializers.ModelSerializer):
     state = serializers.CharField()
     machine = serializers.CharField()
     characteristics = serializers.CharField()
+    packed = serializers.ListField(child=serializers.CharField())
     class Meta:
         model = FileInfo
         fields = '__all__'
