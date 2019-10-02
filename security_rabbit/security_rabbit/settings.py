@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',    # override django built-in User
     'data',     # process data
+    'uploadFile',
     'djoser',   # https://djoser.readthedocs.io/en/latest/getting_started.html
     'rest_framework',
     'rest_framework.authtoken',   # login, logout
