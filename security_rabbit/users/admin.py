@@ -4,7 +4,7 @@ from .models import User
 
 # https://kuanyui.github.io/2015/02/06/django-customize-user-model/
 class CustomUserAdmin(UserAdmin):
-    list_display = ('companyName','username','email','is_staff','is_active','is_superuser','last_login','companyURL')
+    list_display = ('id','companyName','username','email','is_staff','is_active','is_superuser','last_login','companyURL')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (('Personal info'), {'fields': ('email', 'companyName', 'companyURL')}),
