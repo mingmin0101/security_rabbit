@@ -7,5 +7,6 @@ djangorestframework==3.9.4
 django-templated-mail==1.1.1
 djoser==2.0.1
 celery==3.1.24
+django-celery-results==1.0.1
 amqp==1.4.9
 Faker==2.0.1
