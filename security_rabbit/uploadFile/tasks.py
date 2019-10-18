@@ -9,7 +9,7 @@ import peutils
 import subprocess
 import platform
 import time
-import win32api
+# import win32api
 import string
 import math
 import hashlib
@@ -30,11 +30,11 @@ def file_info(filepath, upload_id):
     last_modified = time.ctime(os.path.getmtime(filepath))   # modified time
     last_accessed = time.ctime(os.path.getatime(filepath))   # access time
     file_size = os.stat(filepath).st_size
-    file_attribute = win32api.GetFileAttributes(filepath)
+    #file_attribute = win32api.GetFileAttributes(filepath)
     file_info_dict = {
         'file_name':filepath.split('/')[-1],
         'file_size':file_size,
-        'file_attribute':file_attribute,
+        #'file_attribute':file_attribute,
         'created':created,
         'last_modified':last_modified,
         'last_accessed':last_accessed
@@ -67,7 +67,7 @@ def file_info(filepath, upload_id):
     file.file_hash_sha1 = file_info_dict['file_sha1']
     file.file_size = os.stat(filepath).st_size
     file.file_magic = str(magic.from_file(filepath))                          # 劉的版本少這個
-    file.file_state = win32api.GetFileAttributes(filepath)
+    #file.file_state = win32api.GetFileAttributes(filepath)
     file.peutils_packed = str(file_info_dict['pack'])
     file.entropy = file_info_dict['entropy']
     file.create_time = str(time.ctime(os.path.getctime(filepath)))
@@ -144,6 +144,20 @@ def byte_analysis(filepath):
     byte_analysis_dict.update(byte_dic)
 
     return byte_analysis_dict
+
+@shared_task
+def file_hash(filepath):
+    chunk_size = 8192
+    sha1 = hashlib.sha1()
+
+    with open(filepath,'rb') as f:
+        while True:
+            chunk = f.read(chunk_size)
+            if not chunk:
+                break        
+            sha1.update(chunk)
+
+    return sha1.hexdigest()
 
 @shared_task
 def __one_gram_byte_summary(chunk,byteList):

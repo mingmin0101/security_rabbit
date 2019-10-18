@@ -29,9 +29,10 @@ ALLOWED_HOSTS = ['*']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #ACCOUNT_EMAIL_VERIFICATION = 'none'
+# CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_CACHE_BACKEND = 'django-cache'
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',   # login, logout
     'corsheaders',  # Cross Origin Resource Sharing (for frontend)
+    # 'django_celery_results',
 
     #'rest_auth',
     #'django.contrib.sites',  # 不知道是誰要用的

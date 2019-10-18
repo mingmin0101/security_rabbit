@@ -26,7 +26,7 @@ class FileInfo(models.Model):
     file_hash_sha1 = models.CharField(max_length=40)
     file_size = models.IntegerField(blank=True, null=True)
     file_magic = models.CharField(max_length=100,blank=True, null=True)
-    file_state = models.IntegerField(blank=True, null=True)
+    # file_state = models.IntegerField(blank=True, null=True)
     peutils_packed = models.CharField(max_length=200, blank=True)
     entropy = models.DecimalField(max_digits=5, decimal_places=4, blank=True, null=True)
 
@@ -69,11 +69,11 @@ class FileInfo(models.Model):
     def __str__(self):
         return str(self.file_name)
 
-    def state(self):
-        dictOfWords = {32:'ARCHIVE', 2048:'COMPRESSED', 64:'DEVICE', 16:'DIRECTORY', 16384:'ENCRYPTED', 2:'HIDDEN', 32768:'INTEGRITY STREAM', 128:'NORMAL', 8192:'NOT CONTENT INDEXED', 131072:'NO SCRUB DATA', 4096:'OFFLINE', 1:'READONLY', 4194304:'RECALL_ON_DATA_ACCESS', 262144:'RECALL_ON_OPEN', 1024:'REPARSE POINT', 512:'SPARSE FILE', 4:'SYSTEM', 256:'TEMPORARY', 65536:'VIRTUAL'}
-        for (key, value) in dictOfWords.items():
-            if (key == self.file_state):
-                return value 
+    # def state(self):
+    #     dictOfWords = {32:'ARCHIVE', 2048:'COMPRESSED', 64:'DEVICE', 16:'DIRECTORY', 16384:'ENCRYPTED', 2:'HIDDEN', 32768:'INTEGRITY STREAM', 128:'NORMAL', 8192:'NOT CONTENT INDEXED', 131072:'NO SCRUB DATA', 4096:'OFFLINE', 1:'READONLY', 4194304:'RECALL_ON_DATA_ACCESS', 262144:'RECALL_ON_OPEN', 1024:'REPARSE POINT', 512:'SPARSE FILE', 4:'SYSTEM', 256:'TEMPORARY', 65536:'VIRTUAL'}
+    #     for (key, value) in dictOfWords.items():
+    #         if (key == self.file_state):
+    #             return value 
         
     def signer_dic(self):
         return eval(self.signer)
