@@ -25,7 +25,7 @@ class FileInfo(models.Model):
     file_name = models.TextField(blank=True)
     file_hash_sha1 = models.CharField(max_length=40)
     file_size = models.IntegerField(blank=True, null=True)
-    file_magic = models.CharField(max_length=100,blank=True, null=True)
+    # file_magic = models.CharField(max_length=100,blank=True, null=True)
     # file_state = models.IntegerField(blank=True, null=True)
     peutils_packed = models.CharField(max_length=200, blank=True)
     entropy = models.DecimalField(max_digits=5, decimal_places=4, blank=True, null=True)

@@ -15,7 +15,7 @@ import math
 import hashlib
 import io
 import re
-from winmagic import magic
+# from winmagic import magic
 
 from django.conf import settings
 from uploadFile.models import FileInfo, File
@@ -66,7 +66,7 @@ def file_info(filepath, upload_id):
     file.file_name = filepath.split('/')[-1]
     file.file_hash_sha1 = file_info_dict['file_sha1']
     file.file_size = os.stat(filepath).st_size
-    file.file_magic = str(magic.from_file(filepath))                          # 劉的版本少這個
+    #file.file_magic = str(magic.from_file(filepath))                          # 劉的版本少這個
     #file.file_state = win32api.GetFileAttributes(filepath)
     file.peutils_packed = str(file_info_dict['pack'])
     file.entropy = file_info_dict['entropy']
@@ -101,6 +101,8 @@ def file_info(filepath, upload_id):
     # #file.byte_distribution =
     # #file.score =
     file.save()
+
+    #File.objects.get(id=file_id).delete()
 
     return "analysis {} task finished".format(filepath.split('/')[-1])
     # return FileInfo.objects.get(upload_id=upload_id)

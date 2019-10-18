@@ -78,3 +78,29 @@ def FileResultView(request, hashValue, idValue):
 
     except FileInfo.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class FileUploadAndResultView(APIView):
+    parser_class = (FileUploadParser,)
+
+    def post(self, request, *args, **kwargs):
+
+      file_serializer = FileSerializer(data=request.data)
+
+      if file_serializer.is_valid():
+          # 將檔案存下來
+          file_serializer.save()
+          file_id = file_serializer.data['id']
+          file_path = os.path.join(settings.MEDIA_ROOT,file_serializer.data['file'])
+
+          # 打開檔案蒐集特徵
+          file_info.delay(file_path, file_id)
+          time.sleep(5)
+          response_serializer = FileInfoSerializer(FileInfo.objects.filter(upload_id=file_id), many=True)
+                    
+          # 運算完刪除DB檔案紀錄、刪除media裡面的檔案    delete()      拒絕存取 可能再另外刪
+          #File.objects.get(id=file_id).delete()
+         
+          return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+      else:
+          return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
