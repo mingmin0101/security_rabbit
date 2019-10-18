@@ -1,9 +1,6 @@
-﻿Django==2.2.2
-django-allauth==0.39.1
-django-cors-headers==3.0.2
-django-rest-auth==0.9.5
-django-rest-framework==0.1.0
-djangorestframework==3.9.4
-django-templated-mail==1.1.1
+﻿django-templated-mail==1.1.1
 djoser==2.0.1
 celery==3.1.24
+django-celery-results==1.0.1
+amqp==1.4.9
+Faker==2.0.1
