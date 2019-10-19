@@ -5,12 +5,17 @@ from users.serializers import UserSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from django.conf import settings
+from django.core.files import File
+from django.shortcuts import render,redirect
+from django.http import HttpResponse
+from .models import Documents
+from .forms import DocumentForm
+import os
 
 from data.tasks import calculate_score
 def process_uploaded_file(request):
     pass
-
-
 
 # API endpoint that allows users to be viewed or edited.
 @api_view(['GET'])
@@ -85,15 +90,16 @@ def FileInfoView(request):
     except Computer.DoesNotExist:
         return Response(status = status.HTTP_404_NOT_FOUND)
 
+def download_scanfile(request):  # , userid
+    file_path = os.path.join(settings.MEDIA_ROOT,"exefiles","solfege.exe")
+    with open(file_path,'rb') as f:
+        file = File (f)
+        response = HttpResponse(file.chunks(), content_type='APPLICATION/OCTET-STREAM')
+        response['Content-Disposition'] = 'attachment; filename=solfege.exe'
+        response['Content-Length'] = os.path.getsize(file_path)
+    return response
 
 ###############################
-from django.shortcuts import render,redirect
-from django.http import HttpResponse
-from .models import Documents
-from django.conf import settings
-from django.core.files import File
-from .forms import DocumentForm
-import os
 
 def uploadxml(request):
     if (request.POST):
@@ -105,14 +111,14 @@ def uploadxml(request):
         form = DocumentForm()
     return render(request,'uploadxml.html',{'form':form})
 
-def downloadpy(request,filename):
-    file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.py')
-    with open(file_path,'rb') as f:
-        file = File (f)
-        response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
-        response['Content-Disposition'] = 'attachment; filename=' + filename+'.py'
-        response['Content-Length'] = os.path.getsize(file_path)
-    return response
+# def downloadpy(request,filename):
+#     file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.py')
+#     with open(file_path,'rb') as f:
+#         file = File (f)
+#         response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
+#         response['Content-Disposition'] = 'attachment; filename=' + filename+'.py'
+#         response['Content-Length'] = os.path.getsize(file_path)
+#     return response
 
 def downloadexe(request,filename):
     file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.exe')
@@ -123,11 +129,11 @@ def downloadexe(request,filename):
         response['Content-Length'] = os.path.getsize(file_path)
     return response
 
-def downloadtxt(request,filename):
-    file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.txt')
-    with open(file_path,'rb') as f:
-        file = File (f)
-        response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
-        response['Content-Disposition'] = 'attachment; filename=' + filename+'.txt'
-        response['Content-Length'] = os.path.getsize(file_path)
-    return response
+# def downloadtxt(request,filename):
+#     file_path = os.path.join(settings.MEDIA_ROOT,'exefiles',filename+'.txt')
+#     with open(file_path,'rb') as f:
+#         file = File (f)
+#         response = HttpResponse(file.chunks(),content_type='APPLICATION/OCTET-STREAM')
+#         response['Content-Disposition'] = 'attachment; filename=' + filename+'.txt'
+#         response['Content-Length'] = os.path.getsize(file_path)
+#     return response
