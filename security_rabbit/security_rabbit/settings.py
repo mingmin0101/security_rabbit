@@ -47,10 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',   # login, logout
     'corsheaders',  # Cross Origin Resource Sharing (for frontend)
-    # 'django_celery_results',
-
-    #'rest_auth',
-    #'django.contrib.sites',  # 不知道是誰要用的
+    "sslserver",
     
 ]
 
@@ -162,3 +159,10 @@ MEDIA_URL=''
 
 
 CELERY_BROKER_URL = 'amqp://localhost'
+
+
+# HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
