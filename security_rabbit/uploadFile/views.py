@@ -74,7 +74,9 @@ class FileUploadView(APIView):
 def FileResultView(request, hashValue, idValue):
     try:
         file_serializer = FileInfoSerializer(FileInfo.objects.filter(upload_id=idValue), many=True)   # 
-        return Response(file_serializer.data, status=status.HTTP_200_OK)
+        result = file_serializer.data
+        #File.objects.get(id=idValue).delete()
+        return Response(result, status=status.HTTP_200_OK)
 
     except FileInfo.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
