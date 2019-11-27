@@ -62,8 +62,8 @@ class ScanningRecord(models.Model):
     """each computer has a scanning_history table"""
     scan_id = models.AutoField(primary_key=True) 
     
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    start_time = models.CharField(max_length=30, blank=True)
+    end_time = models.CharField(max_length=30, blank=True)
     normal_option = models.BooleanField()
     advance_option = models.BooleanField()
     customized_option = models.BooleanField()
@@ -77,48 +77,54 @@ class ScanningRecord(models.Model):
 
 class FileInfo(models.Model):
     """every scanning_details contains scanned files info"""
-    
+    # class Meta:
+    #     db_table = 'FileInfo_scan'
+
     file_path = models.TextField(blank=True)
     file_hash_sha1 = models.CharField(max_length=40)
     file_size = models.IntegerField(blank=True, null=True)
-    file_magic = models.CharField(max_length=100,blank=True, null=True)
-    file_state = models.IntegerField(blank=True, null=True)
+    # file_magic = models.CharField(max_length=100,blank=True, null=True)
+    # file_state = models.IntegerField(blank=True, null=True)
     peutils_packed = models.CharField(max_length=200, blank=True)
     entropy = models.DecimalField(max_digits=5, decimal_places=4, blank=True, null=True)
 
-    create_time = models.DateTimeField(blank=True)
-    modified_time = models.DateTimeField(blank=True)
-    accessed_time = models.DateTimeField(blank=True)
+    create_time = models.CharField(max_length=30, blank=True, null=True)
+    modified_time = models.CharField(max_length=30, blank=True, null=True)
+    accessed_time = models.CharField(max_length=30, blank=True, null=True)
 
-    company = models.CharField(max_length=50, blank=True)
-    description = models.CharField(max_length=60, blank=True)
-    product = models.CharField(max_length=50, blank=True)
-    prod_version = models.CharField(max_length=40, blank=True)
-    file_version = models.CharField(max_length=40, blank=True)
-    machine_type = models.CharField(max_length=20, blank=True)
+    company = models.CharField(max_length=50, blank=True, null=True)
+    description = models.CharField(max_length=60, blank=True, null=True)
+    product = models.CharField(max_length=50, blank=True, null=True)
+    prod_version = models.CharField(max_length=40, blank=True, null=True)
+    file_version = models.CharField(max_length=40, blank=True, null=True)
+    machine_type = models.CharField(max_length=20, blank=True, null=True)
 
-    signature_verification = models.CharField(max_length=100)
-    link_date = models.DateTimeField(blank=True)
-    signing_date = models.DateTimeField(blank=True)
+    signature_verification = models.CharField(max_length=100, null=True)
+    link_date = models.CharField(max_length=30, blank=True, null=True)
+    signing_date = models.CharField(max_length=30, blank=True, null=True)
 
-    signer = models.TextField(blank=True)
-    counter_signer = models.TextField(blank=True)
+    signer = models.TextField(blank=True, default=[])
+    counter_signer = models.TextField(blank=True, default=[])
 
     pe_machine = models.IntegerField(blank=True, null=True)
     pe_sectionNum = models.IntegerField(blank=True, null=True)
-    pe_timeDateStamp = models.DateTimeField(blank=True)
+    pe_timeDateStamp = models.IntegerField(blank=True, null=True)
     pe_characteristics = models.IntegerField(blank=True, null=True)
     pe_entryPoint = models.IntegerField(blank=True, null=True)
 
-    pe_sections = models.TextField(blank=True)
+    pe_sections = models.TextField(blank=True, default=[])
 
-    pe_imports = models.TextField(blank=True)
+    pe_imports = models.TextField(blank=True, default={})
 
-    pe_exports = models.TextField(blank=True)
+    pe_exports = models.TextField(blank=True, default=[])
+
+    network_ability = models.BooleanField()
+    rw_ability = models.BooleanField()
+    exec_ability = models.BooleanField()
     
     #pefile_txt = models.IntegerField(blank=True, null=True)
-    printablestr_txt = models.IntegerField(blank=True, null=True)   # 字串要不要先經過處理再存
-    byte_distribution = models.TextField(blank=True)
+    #printablestr_txt = models.IntegerField(blank=True, null=True)   # 字串要不要先經過處理再存
+    #byte_distribution = models.TextField(blank=True)
 
     score = models.IntegerField(default=0)
 

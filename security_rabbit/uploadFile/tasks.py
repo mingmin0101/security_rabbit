@@ -101,6 +101,10 @@ def file_info(filepath, upload_id):
         file.pe_sections = str(file_info_dict['Section_info'])
         file.pe_imports = str(file_info_dict['Import_directories'])
         file.pe_exports = str(file_info_dict['Export_directories'])
+        file.exec_ability = file_info_dict['exec_ability']
+        file.network_ability = file_info_dict['network_ability']
+        file.rw_ability = file_info_dict['rw_ability']
+        
     except:
         pass    
 

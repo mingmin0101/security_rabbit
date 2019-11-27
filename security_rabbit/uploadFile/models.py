@@ -60,9 +60,12 @@ class FileInfo(models.Model):
 
     pe_exports = models.TextField(blank=True, default=[])
     
+    network_ability = models.BooleanField()
+    rw_ability = models.BooleanField()
+    exec_ability = models.BooleanField()
     #pefile_txt = models.IntegerField(blank=True, null=True)
-    printablestr_txt = models.IntegerField(blank=True, null=True)   # 字串要不要先經過處理再存
-    byte_distribution = models.TextField(blank=True)
+    # printablestr_txt = models.IntegerField(blank=True, null=True)   # 字串要不要先經過處理再存
+    # byte_distribution = models.TextField(blank=True)
 
     score = models.IntegerField(default=0)
 

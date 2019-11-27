@@ -7,9 +7,10 @@ urlpatterns = [
     path('api/ScanningDetails', views.ScanningDetailsView),
     path('api/FileInfo', views.FileInfoView),
 
-    path('download_scanfile', views.download_scanfile),
+    path('download_scanfile', views.download_scanfile), 
+    # path('download_scanfile/<slug:userid>', views.download_scanfile),  
 
-    path('uploadxml/',views.uploadxml),
+    path('uploadjson/<int:userid>/<slug:deviceuuid>',views.uploadjson),
     path('downloadzip/<slug:filename>',views.downloadzip),
 
 ]

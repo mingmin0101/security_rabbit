@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',   # login, logout
     'corsheaders',  # Cross Origin Resource Sharing (for frontend)
-    "sslserver",
+    #"sslserver",
     
 ]
 
@@ -106,6 +106,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'USER': 'SecurityRabbit',
+        'PASSWORD': 'RabbitRabbit',
     }
 }
 
@@ -164,5 +166,6 @@ CELERY_BROKER_URL = 'amqp://localhost'
 # HTTPS
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_DOMAIN = '127.0.0.1'
