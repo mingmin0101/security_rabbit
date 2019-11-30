@@ -18,7 +18,7 @@ from Orange.data import Table, Domain, ContinuousVariable, DiscreteVariable
 
 import datetime
 import json
-from sqlalchemy import create_engine
+#from sqlalchemy import create_engine
 
 resourceDir = os.path.join(settings.MEDIA_ROOT,"documents")
 
@@ -130,7 +130,7 @@ def calculate_score(userid, deviceuuid):
     saveData(file_df_filter)
     
     # 刪除上傳的json檔
-    # os.remove(filepath)
+    os.remove(filepath)
 
     return "analysis task finished!"
 
@@ -159,6 +159,7 @@ def saveData(df):
             file_hash_sha1 = record['file_sha1'],
             file_size = record['file_size'],
             
+            file_state = 32,
             peutils_packed = record['pack'],
             entropy = record['entropy'],
             

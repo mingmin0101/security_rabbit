@@ -84,7 +84,7 @@ class FileInfo(models.Model):
     file_hash_sha1 = models.CharField(max_length=40)
     file_size = models.IntegerField(blank=True, null=True)
     # file_magic = models.CharField(max_length=100,blank=True, null=True)
-    # file_state = models.IntegerField(blank=True, null=True)
+    file_state = models.IntegerField(blank=True, null=True)
     peutils_packed = models.CharField(max_length=200, blank=True)
     entropy = models.DecimalField(max_digits=5, decimal_places=4, blank=True, null=True)
 
@@ -126,7 +126,7 @@ class FileInfo(models.Model):
     #printablestr_txt = models.IntegerField(blank=True, null=True)   # 字串要不要先經過處理再存
     #byte_distribution = models.TextField(blank=True)
 
-    score = models.IntegerField(default=0)
+    score = models.DecimalField(max_digits=3, decimal_places=1, default=0)
 
     scanningRecord_id = models.ForeignKey(ScanningRecord, on_delete=models.CASCADE)
 
